@@ -1,0 +1,89 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Bindings.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Bindings.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Bindings">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+    <UniformGrid Columns="2">
+        <!-- Contenedor Formulario -->
+        <StackPanel>
+            <TextBlock Text="{Binding Greeting}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Margin="5"/>
+            <TextBlock Text="{Binding Saludo}"
+                       HorizontalAlignment="Center"
+                       Margin="5,5,5,10"/>
+            <ComboBox Width="200" HorizontalAlignment="Center"
+                      ItemsSource="{Binding ListaColores}"
+                      SelectedIndex="0"
+                      SelectedItem="{Binding Boli.Color}"/>
+            <TextBox Width="200" Margin="10"
+                     Text="{Binding Boli.Codigo}"/>
+            <CheckBox HorizontalAlignment="Center"
+                      Margin="10"
+                      Content="Opciones Avanzadas"
+                      Command="{Binding MostarOpcionAvanzadoCommand}"/>
+            <StackPanel Orientation="Horizontal"
+                        Background="Blue"
+                        HorizontalAlignment="Center"
+                        Width="200"
+                        IsVisible="{Binding Avanzado}">
+                <TextBox Margin="7"
+                         Width="86"/>
+                <TextBox Margin="7"
+                         Width="86"/>
+            </StackPanel>
+            <CheckBox Name="check"
+                      HorizontalAlignment="Center"
+                      Content="Pulsa si quieres"
+                      Margin="10"/>
+            <TextBlock Width="200"
+                       Margin="0"
+                       HorizontalAlignment="Center"
+                       Text="{Binding Mensaje}"/>
+            <Button Width="200" Content="Aceptar" 
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Command="{Binding MostrarBoliCommand}"
+                    CommandParameter="{Binding ElementName=check, Path=IsChecked}"/>
+        </StackPanel>
+        <!-- Fin Formulario -->
+        
+        <!-- Lista consultas -->
+        <StackPanel>
+            <ComboBox ItemsSource="{Binding Boligrafos}"/>
+            <ListBox ItemsSource="{Binding Boligrafos}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="10" CornerRadius="10"
+                                BorderThickness="10">
+                            <StackPanel>
+                                <Image Source="avares://Bindings/Assets/imgBoli.png"
+                                       Width="50"/>
+                                <TextBox Text="{Binding Codigo}"
+                                         HorizontalAlignment="Center"
+                                         Margin="10"/>
+                                <TextBox Text="{Binding Color}"
+                                         HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <!-- Fin Consultas -->
+    </UniformGrid>
+    
+    
+</Window>
