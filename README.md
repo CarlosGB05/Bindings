@@ -1,8 +1,10 @@
-﻿# Proyecto que gestiona una tienda de boligrafos
-Este proyecto fue desarrollado con todo mi esfuerzo
+﻿# Proyecto que gestiona una tienda de bolígrafos
+Este proyecto esta en desarrollado con con el fin de
+aprender el lenguaje C#
 
 ## Modo de instalación
-Descargamos el ejecutable y listo
+A partir de JetBrain Rider o ejecutable
 
 ## Funcionamiento pantalla de inicio
-No necesitas ser muy listo pa saberlo
+Crear un bolígrafo a partir de un color y un código
+y mostrar los creados en una lista
