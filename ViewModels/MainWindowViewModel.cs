@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Avalonia.Controls;
+using Avalonia.Media;
 using Bindings.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,6 +13,9 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty]
     private Boligrafo boli = new();
+
+    [ObservableProperty] 
+    private Boligrafo boliSeleccionado = new();
     
     // tiene q ser privado y empezar por minuscula y no tener get,set para realizar cambios
     [ObservableProperty]
@@ -44,13 +49,13 @@ public partial class MainWindowViewModel : ViewModelBase
         Boligrafos.Add(boli);
         
         Boligrafo boli2 = new();
-        boli2.Codigo = "1010";
-        boli2.Color = "Azul";
+        boli2.Codigo = "2020";
+        boli2.Color = "Rojo";
         Boligrafos.Add(boli2);
         
         Boligrafo boli3 = new();
-        boli3.Codigo = "1010";
-        boli3.Color = "Azul";
+        boli3.Codigo = "3030";
+        boli3.Color = "Verde";
         Boligrafos.Add(boli3);
     }
 
@@ -61,11 +66,24 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    public void CargarBoliSeleccionado()
+    {
+        Boli = BoliSeleccionado;
+        ModoCrear = false;
+        ModoEditar = true;
+    }
+
+    [RelayCommand]
     public void MostrarBoli(object parameter)
     {
-        if (parameter is false)
+        CheckBox check = (CheckBox)parameter;
+        
+        if (check.IsChecked is false)
         {
             Mensaje = "Debes marcar el check";
+            Console.WriteLine("Debes marcar el check");
+            check.Foreground = Brushes.Red;
+            check.FontWeight = FontWeight.Bold;
             return;
         }
 
@@ -75,9 +93,11 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         else
         {
+            // Aqui se crea el boli
             Console.WriteLine(Boli.Codigo+" "+Boli.Color);
             Boligrafos.Add(Boli);
             Boli = new Boligrafo();
+            check.IsChecked = false;
         }
 
         
@@ -94,5 +114,27 @@ public partial class MainWindowViewModel : ViewModelBase
             Avanzado = false;
         }
     }
+
+    [RelayCommand]
+    public void MostrarCondiciones(object parameter) {
+        CheckBox check = (CheckBox)parameter;
+        if (check.IsChecked is true)
+        {
+            check.Foreground = Brushes.Black;
+            check.FontWeight = FontWeight.Normal;
+        }
+        else
+        {
+            check.Foreground = Brushes.Red;
+            check.FontWeight = FontWeight.Bold;
+        }
+    }
+    
+    [ObservableProperty]
+    private bool modoEditar = false;
+    
+    [ObservableProperty]
+    private bool modoCrear = true;
+    
 
 }

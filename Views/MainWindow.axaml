@@ -46,8 +46,10 @@
             </StackPanel>
             <CheckBox Name="check"
                       HorizontalAlignment="Center"
-                      Content="Pulsa si quieres"
-                      Margin="10"/>
+                      Content="Aceptar Condiciones"
+                      Margin="10"
+                      Command="{Binding MostrarCondicionesCommand}"
+                      CommandParameter="{Binding ElementName=check}"/>
             <TextBlock Width="200"
                        Margin="0"
                        HorizontalAlignment="Center"
@@ -56,14 +58,42 @@
                     HorizontalContentAlignment="Center"
                     HorizontalAlignment="Center"
                     Command="{Binding MostrarBoliCommand}"
-                    CommandParameter="{Binding ElementName=check, Path=IsChecked}"/>
+                    CommandParameter="{Binding ElementName=check}"
+                    IsVisible="{Binding ModoCrear}"/>
+            
+            <Button Width="200" Content="Editar" 
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Command="{Binding MostrarBoliCommand}"
+                    CommandParameter="{Binding ElementName=check}"
+                    IsVisible="{Binding ModoEditar}"
+                    Margin="10"/>
+            
+            <Button Width="200" Content="Cancelar" 
+                    HorizontalContentAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Command="{Binding MostrarBoliCommand}"
+                    CommandParameter="{Binding ElementName=check}"
+                    IsVisible="{Binding ModoEditar}"/>
         </StackPanel>
         <!-- Fin Formulario -->
         
         <!-- Lista consultas -->
         <StackPanel>
             <ComboBox ItemsSource="{Binding Boligrafos}"/>
-            <ListBox ItemsSource="{Binding Boligrafos}">
+            <ListBox ItemsSource="{Binding Boligrafos}"
+                     Height="350"
+                     SelectedItem="{Binding BoliSeleccionado}">
+                <Interaction.Behaviors> <!-- Si ocurre algo dentro del stackpanel hace lo siguiente-->
+                    <EventTriggerBehavior EventName="DoubleTapped">
+                        <InvokeCommandAction Command="{Binding CargarBoliSeleccionadoCommand}"/>
+                    </EventTriggerBehavior>
+                </Interaction.Behaviors>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="10" CornerRadius="10"
