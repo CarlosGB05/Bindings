@@ -29,9 +29,7 @@ public partial class MainWindowViewModel : ViewModelBase
     
     public string Greeting { get; } = "Welcome to Avalonia!";
     public string Saludo { set; get; } = "Bienvenido!!!!";
-
     public List<string> ListaColores { set; get; }
-    
 
     private void CargarCombo()
     {
@@ -66,6 +64,26 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    public void ComprobarFecha()
+    {
+        CheckDate();
+    }
+
+    private bool CheckDate()
+    {
+        if (Boli.Fecha < DateTime.Today)
+        {
+            Mensaje = "No puedes marcar un dia anterior a hoy";
+            return false;
+        }
+        else
+        {
+            Mensaje = "";
+            return true;
+        }
+    }
+
+    [RelayCommand]
     public void CargarBoliSeleccionado()
     {
         Boli = BoliSeleccionado;
@@ -84,6 +102,12 @@ public partial class MainWindowViewModel : ViewModelBase
             Console.WriteLine("Debes marcar el check");
             check.Foreground = Brushes.Red;
             check.FontWeight = FontWeight.Bold;
+            return;
+        }
+
+        if (CheckDate() is false)
+        {
+            Mensaje = "Fecha Incorrecta";
             return;
         }
 
